@@ -79,7 +79,7 @@ const Reservation = () => {
             Table Reservation
           </h1>
           <p className="text-center mb-8 text-muted-foreground">
-            Select a table for your reservation
+            Select your party size and preferred time to see available tables
           </p>
 
           <TableGrid tables={tables} />

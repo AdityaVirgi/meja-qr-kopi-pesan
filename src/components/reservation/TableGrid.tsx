@@ -3,6 +3,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { CalendarDays, Clock } from "lucide-react";
+import { format } from "date-fns";
 
 export interface TableType {
   id: number;
@@ -18,7 +22,15 @@ interface TableGridProps {
 
 const TableGrid = ({ tables }: TableGridProps) => {
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
+  const [partySize, setPartySize] = useState<number>(1);
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [checkInTime, setCheckInTime] = useState<string>("12:00");
+  const [checkOutTime, setCheckOutTime] = useState<string>("13:00");
   const navigate = useNavigate();
+
+  const filteredTables = tables.filter(
+    (table) => table.isAvailable && table.capacity >= partySize
+  );
 
   const handleTableClick = (table: TableType) => {
     if (!table.isAvailable) {
@@ -34,14 +46,90 @@ const TableGrid = ({ tables }: TableGridProps) => {
       toast.error("Please select a table first");
       return;
     }
+
+    if (!date) {
+      toast.error("Please select a date");
+      return;
+    }
+
+    if (!checkInTime || !checkOutTime) {
+      toast.error("Please select check-in and check-out times");
+      return;
+    }
+
+    // Format the reservation data
+    const reservationData = {
+      tableId: selectedTable,
+      date: format(date, 'yyyy-MM-dd'),
+      checkInTime,
+      checkOutTime,
+      partySize
+    };
+
+    // Here you would typically save the reservation data
+    console.log('Reservation data:', reservationData);
     
     navigate(`/menu-order/${selectedTable}`);
   };
 
   return (
     <div className="max-w-4xl mx-auto">
+      <div className="mb-8 space-y-6">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Number of People</label>
+          <Input
+            type="number"
+            min="1"
+            value={partySize}
+            onChange={(e) => setPartySize(parseInt(e.target.value) || 1)}
+            className="w-full"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Date</label>
+          <div className="border rounded-lg p-4">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="rounded-md border"
+              disabled={(date) => date < new Date()}
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">Check-in Time</label>
+            <div className="relative">
+              <Clock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+              <Input
+                type="time"
+                value={checkInTime}
+                onChange={(e) => setCheckInTime(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">Check-out Time</label>
+            <div className="relative">
+              <Clock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+              <Input
+                type="time"
+                value={checkOutTime}
+                onChange={(e) => setCheckOutTime(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="mb-6 p-4 bg-coffee-light text-coffee-dark rounded-lg text-center">
-        <h3 className="font-medium">Please select a table</h3>
+        <h3 className="font-medium">Available Tables for {partySize} {partySize === 1 ? 'Person' : 'People'}</h3>
         <div className="flex items-center justify-center mt-3 space-x-6">
           <div className="flex items-center">
             <div className="w-4 h-4 rounded-full bg-available mr-2"></div>
@@ -60,7 +148,7 @@ const TableGrid = ({ tables }: TableGridProps) => {
         </div>
         
         <div className="grid grid-cols-3 gap-6 mb-8">
-          {tables.map((table) => (
+          {filteredTables.map((table) => (
             <div 
               key={table.id} 
               className={`relative p-4 rounded-lg table-hover cursor-pointer text-center
