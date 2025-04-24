@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -34,16 +33,15 @@ const Index = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative h-[70vh] bg-coffee-dark flex items-center">
-        <div className="absolute inset-0 bg-black/50"></div>
+      <section className="relative h-[70vh] bg-coffee-dark flex items-center bg-coffee-pattern">
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         <div className="container mx-auto px-4 z-10 text-white">
           <div className="max-w-2xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Welcome to Kopi Pesan
+              alley.jkt
             </h1>
             <p className="text-lg md:text-xl mb-8 text-gray-200">
-              Experience handcrafted coffee and delicious food in a cozy
-              atmosphere. Reserve your table and order in advance to save time.
+              NOTHING CAN SEPARATE YOU FROM ... COFFEE
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
@@ -106,10 +104,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6 text-coffee-dark">
-              About Kopi Pesan
+              About alley.jkt
             </h2>
             <p className="text-muted-foreground mb-8">
-              Kopi Pesan is a modern coffee shop dedicated to providing a
+              alley.jkt is a modern coffee shop dedicated to providing a
               seamless experience for our customers. Our reservation and ordering
               system allows you to reserve tables, pre-order menu items, and
               enjoy your coffee without waiting in line.
