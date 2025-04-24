@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,21 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Coffee themed colors
+				coffee: {
+					light: '#E6D7C3',
+					DEFAULT: '#6F4E37',
+					dark: '#3A2618',
+				},
+				cream: {
+					DEFAULT: '#F5F5DC',
+				},
+				available: {
+					DEFAULT: '#4ade80', // green
+				},
+				occupied: {
+					DEFAULT: '#ef4444', // red
 				}
 			},
 			borderRadius: {
@@ -89,6 +105,9 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
+			},
+			backgroundImage: {
+				'coffee-pattern': "url('/coffee-pattern.png')",
 			}
 		}
 	},
