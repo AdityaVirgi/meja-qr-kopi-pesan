@@ -168,7 +168,7 @@ const TableGrid = ({ tables }: TableGridProps) => {
                 {table.number}
               </div>
               <p className={`text-sm ${table.isAvailable ? "text-green-800" : "text-red-800"}`}>
-                Exactly {table.capacity} seats
+                {table.capacity} seats
               </p>
             </div>
           ))}
