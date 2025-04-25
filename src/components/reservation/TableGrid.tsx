@@ -1,12 +1,10 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
-import { CalendarDays, Clock } from "lucide-react";
-import { format } from "date-fns";
+import { Clock } from "lucide-react";
 
 export interface TableType {
   id: number;
@@ -29,7 +27,7 @@ const TableGrid = ({ tables }: TableGridProps) => {
   const navigate = useNavigate();
 
   const filteredTables = tables.filter(
-    (table) => table.isAvailable && table.capacity >= partySize
+    (table) => table.isAvailable && table.capacity === partySize
   );
 
   const handleTableClick = (table: TableType) => {
@@ -57,16 +55,14 @@ const TableGrid = ({ tables }: TableGridProps) => {
       return;
     }
 
-    // Format the reservation data
     const reservationData = {
       tableId: selectedTable,
-      date: format(date, 'yyyy-MM-dd'),
+      date: date ? format(date, 'yyyy-MM-dd') : '',
       checkInTime,
       checkOutTime,
       partySize
     };
 
-    // Here you would typically save the reservation data
     console.log('Reservation data:', reservationData);
     
     navigate(`/menu-order/${selectedTable}`);
@@ -129,7 +125,12 @@ const TableGrid = ({ tables }: TableGridProps) => {
       </div>
 
       <div className="mb-6 p-4 bg-coffee-light text-coffee-dark rounded-lg text-center">
-        <h3 className="font-medium">Available Tables for {partySize} {partySize === 1 ? 'Person' : 'People'}</h3>
+        <h3 className="font-medium">Tables Available for Exactly {partySize} {partySize === 1 ? 'Person' : 'People'}</h3>
+        {filteredTables.length === 0 && (
+          <p className="text-sm text-red-600 mt-2">
+            No tables available for exactly {partySize} people. Please adjust your party size.
+          </p>
+        )}
         <div className="flex items-center justify-center mt-3 space-x-6">
           <div className="flex items-center">
             <div className="w-4 h-4 rounded-full bg-available mr-2"></div>
@@ -166,13 +167,12 @@ const TableGrid = ({ tables }: TableGridProps) => {
                 {table.number}
               </div>
               <p className={`text-sm ${table.isAvailable ? "text-green-800" : "text-red-800"}`}>
-                {table.capacity} seats
+                Exactly {table.capacity} seats
               </p>
             </div>
           ))}
         </div>
 
-        {/* Wall decorations */}
         <div className="border-t-4 border-coffee-dark w-full mb-6"></div>
         <div className="grid grid-cols-4 gap-6 mb-6">
           <div className="h-4 bg-coffee rounded"></div>
@@ -181,7 +181,6 @@ const TableGrid = ({ tables }: TableGridProps) => {
           <div className="h-4 bg-coffee rounded"></div>
         </div>
         
-        {/* Entrance */}
         <div className="w-32 h-8 mx-auto bg-coffee/20 border border-coffee rounded-t-lg flex items-center justify-center">
           <span className="text-xs text-coffee">Entrance</span>
         </div>
