@@ -51,14 +51,14 @@ const Reservation = () => {
     {
       id: 7,
       number: 7,
-      capacity: 8,
+      capacity: 6,
       isAvailable: true,
       position: { x: 0, y: 2 },
     },
     {
       id: 8,
       number: 8,
-      capacity: 2,
+      capacity: 3,
       isAvailable: true,
       position: { x: 1, y: 2 },
     },
@@ -68,6 +68,27 @@ const Reservation = () => {
       capacity: 4,
       isAvailable: false,
       position: { x: 2, y: 2 },
+    },
+    {
+      id: 10,
+      number: 10,
+      capacity: 5,
+      isAvailable: true,
+      position: { x: 0, y: 3 },
+    },
+    {
+      id: 11,
+      number: 11,
+      capacity: 3,
+      isAvailable: true,
+      position: { x: 1, y: 3 },
+    },
+    {
+      id: 12,
+      number: 12,
+      capacity: 6,
+      isAvailable: true,
+      position: { x: 2, y: 3 },
     },
   ]);
 
